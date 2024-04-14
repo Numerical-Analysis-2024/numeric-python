@@ -35,4 +35,9 @@ RUN sudo pacman-key --init && \
   sudo pacman --needed --noconfirm --noprogressbar -Syuq >/dev/null 2>&1 && \
   sudo pacman --needed --noconfirm --noprogressbar -S ${PACKAGES} && \
   sudo pacman -Scc <<< Y <<< Y && \
-  sudo rm -r /var/lib/pacman/sync/*
+  sudo rm -r /var/lib/pacman/sync/* && \
+  echo "alias startJupyter=\"jupyter-lab --port=8888 --no-browser --ip=0.0.0.0 --ServerApp.allow_origin='\$(gp url 8888)' --IdentityProvider.token='' --ServerApp.password=''\"" >> ~/.bashrc
+
+ENV PYDEVD_DISABLE_FILE_VALIDATION=1
+  
+EXPOSE 8888
