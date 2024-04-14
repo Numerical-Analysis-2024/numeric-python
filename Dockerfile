@@ -4,6 +4,7 @@ FROM ghcr.io/cpp-review-dune/introductory-review/aur AS build
 
 ARG AUR_PACKAGES="\
   nbqa \
+  python-sphinx_mdinclude \
   pyupgrade \
   "
 
@@ -39,10 +40,13 @@ ARG PACKAGES="\
   python-isort \
   python-scipy \
   python-matplotlib \
+  python-nbsphinx \
+  python-nbval \
   python-pipx \
   python-pylint \
-  python-pytest \
+  python-pytest-cov \
   python-ruff \
+  python-sphinx_rtd_theme \
   "
 
 COPY --from=build /home/builder/.cache/yay/*/*.pkg.tar.zst /tmp/
@@ -57,5 +61,5 @@ RUN sudo pacman-key --init && \
   echo "alias startJupyter=\"jupyter-lab --port=8888 --no-browser --ip=0.0.0.0 --ServerApp.allow_origin='\$(gp url 8888)' --IdentityProvider.token='' --ServerApp.password=''\"" >> ~/.bashrc
 
 ENV PYDEVD_DISABLE_FILE_VALIDATION=1
-  
+
 EXPOSE 8888
