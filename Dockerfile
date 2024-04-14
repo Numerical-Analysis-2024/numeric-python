@@ -4,6 +4,7 @@ FROM ghcr.io/cpp-review-dune/introductory-review/aur AS build
 
 ARG AUR_PACKAGES="\
   nbqa \
+  pyupgrade \
   "
 
 RUN yay --repo --needed --noconfirm --noprogressbar -Syuq >/dev/null 2>&1 && \
@@ -42,7 +43,6 @@ ARG PACKAGES="\
   python-pylint \
   python-pytest \
   python-ruff \
-  pyupgrade \
   "
 
 COPY --from=build /home/builder/.cache/yay/*/*.pkg.tar.zst /tmp/
