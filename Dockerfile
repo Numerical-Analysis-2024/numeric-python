@@ -1,5 +1,14 @@
 # Copyleft (c) Repaso de Análisis Numérico I 2024, April, 2024.
 
+FROM ghcr.io/cpp-review-dune/introductory-review/aur AS build
+
+ARG AUR_PACKAGES="\
+  nbqa \
+  "
+
+RUN yay --repo --needed --noconfirm --noprogressbar -Syuq >/dev/null 2>&1 && \
+  yay --noconfirm --noprogressbar -S ${AUR_PACKAGES} 2>&1 | tee -a /tmp/$(date -u +"%Y-%m-%d-%H-%M-%S" --date='5 hours ago').log >/dev/null
+
 FROM archlinux:base-devel
 
 RUN ln -s /usr/share/zoneinfo/America/Lima /etc/localtime && \
@@ -21,13 +30,22 @@ RUN ln -s /usr/share/zoneinfo/America/Lima /etc/localtime && \
 USER gitpod
 
 ARG PACKAGES="\
+  flake8 \
   git \
   jupyterlab \
+  mypy \
+  python-black \
+  python-isort \
   python-scipy \
   python-matplotlib \
   python-pipx \
+  python-pylint \
   python-pytest \
+  python-ruff \
+  pyupgrade \
   "
+
+COPY --from=build /home/builder/.cache/yay/*/*.pkg.tar.zst /tmp/
 
 RUN sudo pacman-key --init && \
   sudo pacman-key --populate archlinux && \
