@@ -21,6 +21,7 @@ RUN ln -s /usr/share/zoneinfo/America/Lima /etc/localtime && \
 USER gitpod
 
 ARG PACKAGES="\
+  git \
   jupyterlab \
   python-scipy \
   python-matplotlib \
