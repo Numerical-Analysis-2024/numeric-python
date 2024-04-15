@@ -4,10 +4,10 @@ FROM ghcr.io/cpp-review-dune/introductory-review/aur AS build
 
 ARG AUR_PACKAGES="\
   nbqa \
+  python-sphinx_mdinclude \
   pyupgrade \
   "
 # nbsphinx-link \
-# python-sphinx_mdinclude \
 RUN yay --repo --needed --noconfirm --noprogressbar -Syuq >/dev/null 2>&1 && \
   yay --noconfirm --mflags --nocheck --noprogressbar -S ${AUR_PACKAGES} 2>&1 | tee -a /tmp/$(date -u +"%Y-%m-%d-%H-%M-%S" --date='5 hours ago').log >/dev/null
 
